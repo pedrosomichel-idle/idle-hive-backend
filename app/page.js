@@ -3,9 +3,9 @@
 import { useState } from 'react';
 import './landing.css';
 
-function Hex({ className, filled }) {
+function Hex({ className, filled, style }) {
   return (
-    <svg className={className} viewBox="0 0 28 32" xmlns="http://www.w3.org/2000/svg">
+    <svg className={className} style={style} viewBox="0 0 28 32" xmlns="http://www.w3.org/2000/svg">
       <polygon
         points="14,1 27,8 27,24 14,31 1,24 1,8"
         fill={filled ? 'currentColor' : 'none'}
@@ -118,10 +118,10 @@ export default function LandingPage() {
       {/* Nav */}
       <header className="nav">
         <div className="inner">
-          <div className="nav-brand">
+          <a href="#topo" className="nav-brand">
             <BrandMark />
             IdleHive
-          </div>
+          </a>
           <nav className="nav-links">
             <a href="#recursos">Recursos</a>
             <a href="#como-funciona">Como funciona</a>
@@ -147,10 +147,10 @@ export default function LandingPage() {
       )}
 
       {/* Hero */}
-      <section className="hero">
+      <section className="hero" id="topo">
         <div className="inner">
           <div className="hero-badge">
-            <Hex style={{ width: 11, height: 13 }} />
+            <span className="pulse-dot" />
             Teste grátis de 8 horas · sem cartão de crédito
           </div>
           <h1>
@@ -379,10 +379,10 @@ export default function LandingPage() {
       {/* Footer */}
       <footer className="landing-footer">
         <div className="inner">
-          <div className="nav-brand">
+          <a href="#topo" className="nav-brand">
             <BrandMark size={20} />
             IdleHive
-          </div>
+          </a>
           <div className="foot-links">
             <a href="#recursos">Recursos</a>
             <a href="#como-funciona">Como funciona</a>
