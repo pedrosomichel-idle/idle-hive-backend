@@ -84,7 +84,7 @@ const FAQ = [
   { q: 'Como funciona a licença?', a: 'A licença fica ligada à sua conta e ao seu dispositivo. Você não recebe uma chave pra digitar — é só fazer login no app (a não ser que use uma chave promocional).' },
   { q: 'Posso usar em dois computadores?', a: 'Por padrão, cada licença ativa em 1 dispositivo. Pra usar em outro ao mesmo tempo, dá pra comprar um slot extra específico pra aquele computador.' },
   { q: 'Como funciona o programa de afiliados?', a: 'Qualquer usuário pode virar afiliado direto no app, sem aprovação manual. Você recebe um código e um link únicos, e ganha uma comissão fixa por cada licença vendida através deles.' },
-  { q: 'O Mercado verificado já está disponível?', a: 'Ainda não — está em desenvolvimento e será liberado para quem tem licença ativa. Ele vai permitir anunciar compra e venda, conversar dentro do próprio app e construir reputação a cada troca confirmada pelos dois lados.' },
+  { q: 'Como acesso o Mercado verificado?', a: 'Direto no app, pelo botão "Mercado RMT" na barra lateral — exclusivo para quem tem licença ativa (o período de teste não dá acesso). Na primeira entrada você escolhe um apelido e já pode anunciar ou negociar.' },
   { q: 'O IdleHive garante as negociações do Mercado?', a: 'Não. O Mercado organiza o contato e mostra o histórico de cada pessoa, mas a negociação acontece entre os jogadores, dentro do jogo. Nenhum pagamento passa pelo IdleHive, e a responsabilidade pela troca é de quem negocia.' },
   { q: 'Tem versão pra Mac ou Linux?', a: 'Hoje o instalador é só pra Windows. Outras plataformas podem vir conforme a demanda.' },
   { q: 'Vocês veem minhas senhas dos sites?', a: 'Não. Cookies e sessões ficam nas partições locais do aplicativo e nunca são enviados pro servidor de licenças.' },
@@ -271,12 +271,11 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* Mercado RMT — verificação de reputação (em desenvolvimento) */}
+      {/* Mercado RMT — verificação de reputação */}
       <section id="mercado">
         <div className="inner">
           <div className="rmt-wrap">
             <div className="rmt-head">
-              <span className="soon-badge">Em breve</span>
               <p className="eyebrow" style={{ textAlign: 'center', marginTop: 14 }}>Mercado verificado</p>
               <h2>Negocie sem medo de tomar golpe</h2>
               <p className="section-sub" style={{ marginBottom: 36 }}>
@@ -310,8 +309,8 @@ export default function LandingPage() {
               <div className="tier"><span className="tier-dot bronze" />Bronze</div>
               <div className="tier"><span className="tier-dot prata" />Prata</div>
               <div className="tier"><span className="tier-dot ouro" />Ouro</div>
-              <div className="tier"><span className="tier-dot diamante" />Diamante</div>
               <div className="tier"><span className="tier-dot platina" />Platina</div>
+              <div className="tier"><span className="tier-dot diamante" />Diamante</div>
             </div>
             <p className="tier-caption">
               Cada troca confirmada pelos <strong>dois lados</strong> sobe sua reputação.

@@ -11,6 +11,7 @@ const NAV_ITEMS = [
   { href: '/admin/users', label: 'Usuários' },
   { href: '/admin/keys', label: 'Chaves de ativação' },
   { href: '/admin/affiliates', label: 'Afiliados' },
+  { href: '/admin/reports', label: 'Denúncias' },
 ];
 
 function HexIcon({ className }) {
