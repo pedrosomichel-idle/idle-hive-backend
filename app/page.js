@@ -38,14 +38,9 @@ const DOWNLOAD_URL = process.env.NEXT_PUBLIC_DOWNLOAD_URL || '#baixar';
 const DISCORD_URL = 'https://discord.gg/rbqT6WJRFZ';
 
 const STEPS = [
-  { t: 'Crie sua conta', d: 'Direto no app — e-mail e senha. Leva 30 segundos.' },
-  { t: 'Teste 8h grátis', d: 'Liberado na hora, automaticamente, sem pedir cartão.' },
-  { t: 'Baixe o instalador', d: 'Windows, verificado, com atualização automática depois.' },
-  { t: 'Instale', d: 'Next, next, concluído. Sem enrolação.' },
-  { t: 'Entre com e-mail e senha', d: 'Sem serial, sem chave pra digitar.' },
-  { t: 'Primeira ativação', d: 'Seu dispositivo é vinculado à conta na hora.' },
-  { t: 'Compre quando quiser', d: 'Pagamento único, R$ 20, sem mensalidade.' },
-  { t: 'Pronto', d: 'Adicione suas contas e organize a grade.' },
+  { t: 'Baixe e instale', d: 'Instalador do Windows, direto ao ponto.' },
+  { t: 'Crie sua conta', d: 'E-mail e senha. As 8h grátis liberam na hora, sem cartão.' },
+  { t: 'Jogue', d: 'Adicione suas contas e comece. Simples assim.' },
 ];
 
 const WHY = [
@@ -89,6 +84,8 @@ const FAQ = [
   { q: 'Como funciona a licença?', a: 'A licença fica ligada à sua conta e ao seu dispositivo. Você não recebe uma chave pra digitar — é só fazer login no app (a não ser que use uma chave promocional).' },
   { q: 'Posso usar em dois computadores?', a: 'Por padrão, cada licença ativa em 1 dispositivo. Pra usar em outro ao mesmo tempo, dá pra comprar um slot extra específico pra aquele computador.' },
   { q: 'Como funciona o programa de afiliados?', a: 'Qualquer usuário pode virar afiliado direto no app, sem aprovação manual. Você recebe um código e um link únicos, e ganha uma comissão fixa por cada licença vendida através deles.' },
+  { q: 'O Mercado verificado já está disponível?', a: 'Ainda não — está em desenvolvimento e será liberado para quem tem licença ativa. Ele vai permitir anunciar compra e venda, conversar dentro do próprio app e construir reputação a cada troca confirmada pelos dois lados.' },
+  { q: 'O IdleHive garante as negociações do Mercado?', a: 'Não. O Mercado organiza o contato e mostra o histórico de cada pessoa, mas a negociação acontece entre os jogadores, dentro do jogo. Nenhum pagamento passa pelo IdleHive, e a responsabilidade pela troca é de quem negocia.' },
   { q: 'Tem versão pra Mac ou Linux?', a: 'Hoje o instalador é só pra Windows. Outras plataformas podem vir conforme a demanda.' },
   { q: 'Vocês veem minhas senhas dos sites?', a: 'Não. Cookies e sessões ficam nas partições locais do aplicativo e nunca são enviados pro servidor de licenças.' },
   { q: 'Como recebo as atualizações?', a: 'O app verifica sozinho, baixa em segundo plano e avisa quando está pronto — você escolhe quando reiniciar.' },
@@ -125,6 +122,7 @@ export default function LandingPage() {
           <nav className="nav-links">
             <a href="#recursos">Recursos</a>
             <a href="#como-funciona">Como funciona</a>
+            <a href="#mercado">Mercado</a>
             <a href="#preco">Preço</a>
             <a href="#faq">Perguntas</a>
           </nav>
@@ -140,6 +138,7 @@ export default function LandingPage() {
         <div style={{ padding: '14px 24px', borderBottom: '1px solid var(--border)', display: 'flex', flexDirection: 'column', gap: 12 }}>
           <a href="#recursos" style={{ color: '#eef0f4' }}>Recursos</a>
           <a href="#como-funciona" style={{ color: '#eef0f4' }}>Como funciona</a>
+          <a href="#mercado" style={{ color: '#eef0f4' }}>Mercado</a>
           <a href="#preco" style={{ color: '#eef0f4' }}>Preço</a>
           <a href="#faq" style={{ color: '#eef0f4' }}>Perguntas</a>
           <a href={DOWNLOAD_URL} className="btn btn-primary btn-sm" style={{ marginTop: 8 }}>Baixar grátis</a>
@@ -197,8 +196,8 @@ export default function LandingPage() {
       <section id="como-funciona">
         <div className="inner">
           <p className="eyebrow" style={{ textAlign: 'center' }}>Como funciona</p>
-          <h2>Da conta ao primeiro login</h2>
-          <p className="section-sub">Oito passos, a maioria leva menos de um minuto.</p>
+          <h2>Em 3 passos você está jogando</h2>
+          <p className="section-sub">Sem serial, sem chave pra digitar, sem burocracia.</p>
           <div className="steps-grid">
             {STEPS.map((s, i) => (
               <div className="step" key={s.t}>
@@ -207,6 +206,9 @@ export default function LandingPage() {
                 <p>{s.d}</p>
               </div>
             ))}
+          </div>
+          <div style={{ textAlign: 'center', marginTop: 34 }}>
+            <a href={DOWNLOAD_URL} className="btn btn-primary">Começar agora — grátis</a>
           </div>
         </div>
       </section>
@@ -265,6 +267,76 @@ export default function LandingPage() {
                 </div>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Mercado RMT — verificação de reputação (em desenvolvimento) */}
+      <section id="mercado">
+        <div className="inner">
+          <div className="rmt-wrap">
+            <div className="rmt-head">
+              <span className="soon-badge">Em breve</span>
+              <p className="eyebrow" style={{ textAlign: 'center', marginTop: 14 }}>Mercado verificado</p>
+              <h2>Negocie sem medo de tomar golpe</h2>
+              <p className="section-sub" style={{ marginBottom: 36 }}>
+                Todo mundo que troca item conhece a cena: combina no chat, manda primeiro,
+                e o outro some. O Mercado do IdleHive existe pra acabar com isso.
+              </p>
+            </div>
+
+            <div className="rmt-problem">
+              <div className="rmt-col bad">
+                <h4>Como é hoje</h4>
+                <ul>
+                  <li>Negociação perdida no meio de mil mensagens</li>
+                  <li>Você não faz ideia de quem é a pessoa do outro lado</li>
+                  <li>Quem toma golpe avisa, mas o golpista só troca de nick</li>
+                  <li>Quem é honesto não tem como provar que é</li>
+                </ul>
+              </div>
+              <div className="rmt-col good">
+                <h4>Como fica</h4>
+                <ul>
+                  <li>Anúncios de compra e venda organizados, dentro do app</li>
+                  <li>Chat direto com quem anunciou, sem sair pra lugar nenhum</li>
+                  <li>Histórico público: quantas trocas a pessoa já fechou</li>
+                  <li>Reputação presa à pessoa — trocar de char não limpa a ficha</li>
+                </ul>
+              </div>
+            </div>
+
+            <div className="tier-row">
+              <div className="tier"><span className="tier-dot bronze" />Bronze</div>
+              <div className="tier"><span className="tier-dot prata" />Prata</div>
+              <div className="tier"><span className="tier-dot ouro" />Ouro</div>
+              <div className="tier"><span className="tier-dot diamante" />Diamante</div>
+              <div className="tier"><span className="tier-dot platina" />Platina</div>
+            </div>
+            <p className="tier-caption">
+              Cada troca confirmada pelos <strong>dois lados</strong> sobe sua reputação.
+              Quanto mais alto o selo, mais gente confia em fechar negócio com você.
+            </p>
+
+            <div className="rmt-sides">
+              <div className="rmt-side">
+                <h4>Pra quem vende</h4>
+                <p>Seu histórico fala por você. Não precisa mais implorar pra alguém confiar e mandar primeiro.</p>
+              </div>
+              <div className="rmt-side">
+                <h4>Pra quem compra</h4>
+                <p>Antes de fechar, você vê com quem está falando: quantas trocas já fez e se tem denúncia.</p>
+              </div>
+              <div className="rmt-side">
+                <h4>Pra comunidade</h4>
+                <p>Golpista fica sem espaço: sem reputação, ninguém negocia. E denúncia tem consequência.</p>
+              </div>
+            </div>
+
+            <p className="rmt-note">
+              Exclusivo pra quem tem licença ativa — o que já filtra quem entra e torna
+              o golpe caro demais pra valer a pena.
+            </p>
           </div>
         </div>
       </section>
@@ -386,6 +458,7 @@ export default function LandingPage() {
           <div className="foot-links">
             <a href="#recursos">Recursos</a>
             <a href="#como-funciona">Como funciona</a>
+            <a href="#mercado">Mercado</a>
             <a href="#preco">Preço</a>
             <a href="#faq">Perguntas</a>
             <a href={DISCORD_URL} target="_blank" rel="noreferrer">Comunidade</a>
