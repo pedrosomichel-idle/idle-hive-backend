@@ -6,8 +6,12 @@
 
 import { NextResponse } from 'next/server';
 import { stripeClient } from '../../../../lib/stripe';
-import { supabaseAdmin } from '../../../../lib/supabaseAdmin';
-import { DEFAULT_MAX_DEVICES } from '../../../../lib/license';
+import {
+  grantLicense,
+  grantDeviceSlot,
+  grantAffiliateCommissionIfReferred,
+  markPaymentProcessed,
+} from '../../../../lib/grantPurchase';
 
 // Next.js precisa do corpo cru (não parseado) pra validar a assinatura
 // do Stripe — por isso lemos com request.text() em vez de request.json().
@@ -28,94 +32,39 @@ export async function POST(request) {
     const purchaseType = session.metadata && session.metadata.type === 'device_slot' ? 'device_slot' : 'license';
 
     if (!userId) {
-      console.error('[webhook] checkout.session.completed sem user_id em metadata/client_reference_id.');
+      console.error('[webhook stripe] checkout.session.completed sem user_id em metadata/client_reference_id.');
       return NextResponse.json({ received: true });
     }
 
-    const db = supabaseAdmin();
-
-    if (purchaseType === 'device_slot') {
-      const deviceId = session.metadata && session.metadata.device_id;
-      if (!deviceId) {
-        console.error('[webhook] checkout de device_slot sem device_id em metadata.');
+    try {
+      // Stripe pode reenviar o mesmo evento (retry) — sem essa trava,
+      // um reenvio concederia um segundo slot extra pro mesmo pagamento.
+      const isNew = await markPaymentProcessed({ provider: 'stripe', paymentReference: session.id });
+      if (!isNew) {
         return NextResponse.json({ received: true });
       }
 
-      const { data: existingSlot, error: slotReadError } = await db
-        .from('device_extra_slots')
-        .select('extra_slots')
-        .eq('device_id', deviceId)
-        .maybeSingle();
-
-      if (slotReadError) {
-        console.error('[webhook] Falha ao ler device_extra_slots:', slotReadError.message);
-        return NextResponse.json({ error: slotReadError.message }, { status: 500 });
-      }
-
-      const newExtraSlots = (existingSlot ? existingSlot.extra_slots : 0) + 1;
-
-      const { error: slotWriteError } = await db.from('device_extra_slots').upsert(
-        { device_id: deviceId, extra_slots: newExtraSlots, updated_at: new Date().toISOString() },
-        { onConflict: 'device_id' }
-      );
-
-      if (slotWriteError) {
-        console.error('[webhook] Falha ao gravar device_extra_slots:', slotWriteError.message);
-        return NextResponse.json({ error: slotWriteError.message }, { status: 500 });
-      }
-
-      return NextResponse.json({ received: true });
-    }
-
-    // purchaseType === 'license'
-    const { error } = await db.from('licenses').upsert(
-      {
-        user_id: userId,
-        plan: 'standard',
-        max_devices: DEFAULT_MAX_DEVICES,
-        stripe_customer_id: session.customer,
-        stripe_payment_intent_id: session.payment_intent,
-        amount_cents: session.amount_total,
-        expires_at: null, // licença paga é permanente, sem prazo
-      },
-      { onConflict: 'user_id' }
-    );
-
-    if (error) {
-      console.error('[webhook] Falha ao gravar licença:', error.message);
-      return NextResponse.json({ error: error.message }, { status: 500 });
-    }
-
-    // Comissão de afiliado: se o comprador se cadastrou com um código
-    // de indicação (salvo em user_metadata.referral_code no signUp),
-    // registra a comissão pendente pro parceiro correspondente.
-    try {
-      const { data: buyer } = await db.auth.admin.getUserById(userId);
-      const referralCode = buyer && buyer.user && buyer.user.user_metadata ? buyer.user.user_metadata.referral_code : null;
-
-      if (referralCode) {
-        const { data: affiliate } = await db
-          .from('affiliates')
-          .select('*')
-          .eq('code', String(referralCode).toUpperCase())
-          .maybeSingle();
-
-        if (affiliate) {
-          // Comissão fixa (não é mais % da venda) — o mesmo valor pra
-          // qualquer licença vendida através do afiliado.
-          const amountCents = Number(process.env.AFFILIATE_COMMISSION_FLAT_CENTS || 500);
-          await db.from('commissions').insert({
-            affiliate_id: affiliate.id,
-            user_id: userId,
-            amount_cents: amountCents,
-            status: 'pendente',
-          });
+      if (purchaseType === 'device_slot') {
+        const deviceId = session.metadata && session.metadata.device_id;
+        if (!deviceId) {
+          console.error('[webhook stripe] checkout de device_slot sem device_id em metadata.');
+          return NextResponse.json({ received: true });
         }
+        await grantDeviceSlot({ deviceId });
+        return NextResponse.json({ received: true });
       }
-    } catch (commissionErr) {
-      // Não bloqueia a liberação da licença por causa da comissão —
-      // só loga, pra investigar depois se precisar.
-      console.error('[webhook] Falha ao processar comissão de afiliado:', commissionErr.message);
+
+      // purchaseType === 'license'
+      await grantLicense({
+        userId,
+        amountCents: session.amount_total,
+        stripeCustomerId: session.customer,
+        stripePaymentIntentId: session.payment_intent,
+      });
+      await grantAffiliateCommissionIfReferred({ userId });
+    } catch (err) {
+      console.error('[webhook stripe] Falha ao processar compra:', err.message);
+      return NextResponse.json({ error: err.message }, { status: 500 });
     }
   }
 

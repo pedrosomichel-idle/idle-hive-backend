@@ -11,11 +11,16 @@ create table if not exists public.licenses (
   max_devices int not null default 2,
   stripe_customer_id text,
   stripe_payment_intent_id text,
+  mercadopago_payment_id text,
   amount_cents integer,
   expires_at timestamptz, -- null = licença permanente (paga). preenchido = licença por prazo (chave promo/sorteio)
   created_at timestamptz not null default now(),
   unique (user_id)
 );
+
+-- Se a tabela já existia antes do Mercado Pago (create table if not
+-- exists acima não roda de novo num banco que já tem ela), roda isto:
+alter table public.licenses add column if not exists mercadopago_payment_id text;
 
 create table if not exists public.devices (
   id uuid primary key default gen_random_uuid(),
@@ -236,3 +241,17 @@ alter table public.conversations enable row level security;
 alter table public.messages enable row level security;
 alter table public.transactions enable row level security;
 alter table public.reports enable row level security;
+
+-- =====================================================================
+-- Proteção contra processar o mesmo pagamento duas vezes (webhooks
+-- podem ser reenviados por retry) — usada por lib/grantPurchase.js
+-- =====================================================================
+create table if not exists public.payment_events (
+  id uuid primary key default gen_random_uuid(),
+  provider text not null, -- 'stripe' | 'mercadopago'
+  payment_reference text not null,
+  created_at timestamptz not null default now(),
+  unique (provider, payment_reference)
+);
+
+alter table public.payment_events enable row level security;
