@@ -60,7 +60,12 @@ export async function POST(request) {
             currency_id: 'BRL',
           },
         ],
-        payer: user.email ? { email: user.email } : undefined,
+        // Não mandamos payer (nem só o e-mail) — o IdleHive não coleta
+        // CPF no cadastro, e mandar um comprador PARCIAL (só e-mail,
+        // sem identificação) pro Checkout Pro pode travar o botão de
+        // pagamento, esperando um dado que nunca vai ser preenchido
+        // desse jeito. Deixa a própria tela do Mercado Pago coletar
+        // tudo que precisar do comprador, do zero.
         external_reference: externalReference,
         notification_url: `${baseUrl}/api/webhooks/mercadopago`,
         back_urls: {

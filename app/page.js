@@ -16,6 +16,19 @@ function Hex({ className, filled, style }) {
   );
 }
 
+// Mesmo ícone usado no app — losangos conectados, inspirado no símbolo
+// do PIX, na cor característica dele.
+function PixIcon() {
+  return (
+    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <path d="M12 3l3.5 3.5a2 2 0 0 1 0 2.83L12 12.66 8.5 9.16a2 2 0 0 1 0-2.83L12 3z" fill="currentColor" />
+      <path d="M12 12.66l3.5 3.5a2 2 0 0 1 0 2.83L12 22.5l-3.5-3.5a2 2 0 0 1 0-2.83L12 12.66z" fill="currentColor" opacity="0.55" />
+      <path d="M3 12l3.5-3.5a2 2 0 0 1 2.83 0L12 12l-2.66 2.66a2 2 0 0 1-2.83 0L3 12z" fill="currentColor" opacity="0.8" />
+      <path d="M21 12l-3.5 3.5a2 2 0 0 1-2.83 0L12 12l2.66-2.66a2 2 0 0 1 2.83 0L21 12z" fill="currentColor" opacity="0.65" />
+    </svg>
+  );
+}
+
 function BrandMark({ size = 24 }) {
   return (
     <svg width={size} height={size} viewBox="0 0 240 240" xmlns="http://www.w3.org/2000/svg">
@@ -77,6 +90,7 @@ const COMPARE = [
 
 const FAQ = [
   { q: 'O que é o IdleHive?', a: 'Um app desktop feito pra rodar várias contas do mesmo site ou jogo ao mesmo tempo, cada uma numa sessão totalmente separada, dentro de uma única janela.' },
+  { q: 'Como eu pago?', a: 'Com PIX, direto no app — o pagamento é aprovado na hora, sem esperar boleto compensar ou esperar fatura de cartão. É pagamento único, sem mensalidade: paga uma vez, usa pra sempre.' },
   { q: 'Preciso de uma conta pra cada painel?', a: 'Cada painel é uma conta independente: login, cookies, cache e armazenamento próprios. Nada de uma conta enxergar a outra.' },
   { q: 'Quantas contas posso abrir?', a: 'Quantas quiser. A grade se organiza automaticamente conforme você adiciona painéis.' },
   { q: 'Funciona com qualquer site?', a: 'Funciona como um navegador baseado em Chromium. A compatibilidade depende de cada serviço, e o uso deve respeitar os termos de cada um.' },
@@ -163,7 +177,7 @@ export default function LandingPage() {
             <a href={DOWNLOAD_URL} className="btn btn-primary">Baixar o IdleHive</a>
             <a href="#como-funciona" className="btn btn-ghost">Ver como funciona</a>
           </div>
-          <p className="hero-note">Windows · Grátis por 8h, depois R$ 20 em pagamento único</p>
+          <p className="hero-note">Windows · Grátis por 8h, depois R$ 9,90 vitalício</p>
 
           <div className="hero-stats">
             <div className="hero-stat"><Hex /> Sessões isoladas de verdade</div>
@@ -399,20 +413,24 @@ export default function LandingPage() {
       <section id="preco">
         <div className="inner">
           <p className="eyebrow" style={{ textAlign: 'center' }}>Preço</p>
-          <h2>Licença completa por R$ 20.</h2>
-          <p className="section-sub">Teste 8 horas grátis antes de decidir. Depois, um pagamento único, sem mensalidade.</p>
+          <h2>Licença vitalícia por R$ 9,90.</h2>
+          <p className="section-sub">Teste 8 horas grátis antes de decidir. Pague com PIX, aprovação na hora.</p>
           <div className="price-card">
             <div className="price-tag">Oferta única</div>
-            <div style={{ fontSize: 14, color: '#8b93a1' }}>IdleHive — Licença padrão</div>
-            <div className="amount">R$ 20<span>,00</span></div>
-            <div className="price-note">1 dispositivo (mais com slot extra) · pagamento único</div>
+            <div style={{ fontSize: 14, color: '#8b93a1' }}>IdleHive — Licença vitalícia</div>
+            <div className="amount">R$ 9<span>,90</span></div>
+            <div className="price-note">1 dispositivo (mais com slot extra por R$ 4,90) · pagamento único, pra sempre</div>
+            <div className="pix-badge">
+              <PixIcon />
+              Pague com PIX — cai na hora, sem esperar compensar
+            </div>
             <ul className="price-list">
               <li><Hex filled style={{ color: '#3ba55d' }} /> 8h grátis pra testar</li>
               <li><Hex filled style={{ color: '#3ba55d' }} /> Sem mensalidade</li>
               <li><Hex filled style={{ color: '#3ba55d' }} /> Atualizações incluídas</li>
               <li><Hex filled style={{ color: '#3ba55d' }} /> Suporte pela comunidade</li>
             </ul>
-            <a href={DOWNLOAD_URL} className="btn btn-primary" style={{ width: '100%' }}>Baixar e testar grátis</a>
+            <a href={DOWNLOAD_URL} className="btn btn-primary" style={{ width: '100%' }}>Baixar e pagar com PIX</a>
           </div>
         </div>
       </section>

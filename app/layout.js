@@ -1,7 +1,7 @@
 export const metadata = {
   title: 'IdleHive — Todas as suas contas idle, numa colmeia só',
   description:
-    'Abra várias contas do mesmo jogo ao mesmo tempo, cada uma isolada de verdade. Teste grátis por 8h, depois R$ 20 em pagamento único.',
+    'Abra várias contas do mesmo jogo ao mesmo tempo, cada uma isolada de verdade. Teste grátis por 8h, depois R$ 9,90 vitalício.',
 };
 
 export default function RootLayout({ children }) {

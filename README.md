@@ -157,6 +157,18 @@ Auth que esteja na tabela `admins` (veja o comentário no fim do
   pra marcar como paga (pagamento em si é manual, fora do sistema —
   Pix, transferência etc).
 
+## Preço atualizado + destaque de PIX na landing
+
+Licença: R$20 → **R$9,90 vitalícia**. Slot extra: R$10 → **R$4,90**.
+Atualizado em todo texto do app e da landing (busquei e confirmei que
+não sobrou nenhum "R$20" no código).
+
+A seção de preço da landing ganhou um selo teal destacando "Pague com
+PIX — cai na hora, sem esperar compensar", e uma pergunta nova na FAQ
+("Como eu pago?"). A landing nunca processa pagamento diretamente (o
+checkout sempre acontece dentro do app, depois do download) — essas
+mudanças são só de copy/visual, reforçando o PIX como diferencial.
+
 ## Programa de afiliados: auto-afiliação
 
 Agora é **automático** — qualquer usuário logado clica em "Tornar-se
