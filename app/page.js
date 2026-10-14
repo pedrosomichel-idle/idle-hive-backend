@@ -52,8 +52,11 @@ const DISCORD_URL = 'https://discord.gg/rbqT6WJRFZ';
 
 // Meta Pixel: o clique em "Baixar" é a conversão medida no site (a compra
 // acontece dentro do app e é enviada pelo webhook via API de Conversões).
+// Só conta quem está num PC com Windows: o app não roda no celular, e a Meta
+// otimiza a entrega para quem gera esse evento.
 function trackDownload() {
-  if (typeof window !== 'undefined' && typeof window.fbq === 'function') {
+  if (typeof window === 'undefined' || !/Windows NT/.test(navigator.userAgent)) return;
+  if (typeof window.fbq === 'function') {
     window.fbq('track', 'Lead', { content_name: 'download' });
   }
 }
