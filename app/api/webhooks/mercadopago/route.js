@@ -19,6 +19,7 @@ import {
   grantAffiliateCommissionIfReferred,
   markPaymentProcessed,
 } from '../../../../lib/grantPurchase';
+import { sendPurchaseToMeta } from '../../../../lib/metaCapi';
 
 export async function POST(request) {
   const { searchParams } = new URL(request.url);
@@ -103,6 +104,7 @@ export async function POST(request) {
       mercadopagoPaymentId: String(payment.id),
     });
     await grantAffiliateCommissionIfReferred({ userId });
+    await sendPurchaseToMeta({ userId, value: payment.transaction_amount, paymentId: payment.id });
   } catch (err) {
     console.error('[webhook mercadopago] Falha ao processar pagamento:', err.message);
     return NextResponse.json({ error: err.message }, { status: 500 });
