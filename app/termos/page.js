@@ -5,7 +5,7 @@ export const metadata = { title: 'Termos de uso — IdleHive', robots: { index: 
 export default function Termos() {
   return (
     <LegalPage title="Termos de uso">
-      <p>Estes termos regem o uso do aplicativo IdleHive e a compra da licença, oferecidos por {LEGAL.responsavel} ({LEGAL.documento}), {LEGAL.cidade} ("nós"). Ao instalar, criar conta ou comprar, você concorda com eles.</p>
+      <p>Estes termos regem o uso do aplicativo IdleHive e a compra da licença, oferecidos por {LEGAL.responsavel}, {LEGAL.cidade} ("nós"). Ao instalar, criar conta ou comprar, você concorda com eles.</p>
       <h2>1. O que é o IdleHive</h2>
       <p>Um aplicativo para Windows que abre várias sessões de sites e jogos lado a lado, cada uma isolada (login, cookies e cache próprios). Ele organiza sessões; não automatiza ações dentro dos jogos nem captura credenciais.</p>
       <h2>2. Teste e licença</h2>

@@ -159,7 +159,7 @@ Auth que esteja na tabela `admins` (veja o comentário no fim do
 
 ## Preço atualizado + destaque de PIX na landing
 
-Licença: R$20 → R$9,90 → **R$19,90 vitalícia** (out/2026; valor cobrado vem de MERCADOPAGO_LICENSE_PRICE_BRL na Vercel). Slot extra: R$10 → **R$4,90**.
+Licença: R$20 → R$9,90 → **R$19,90 vitalícia** (out/2026; fixo em app/api/mercadopago/checkout/route.js). Slot extra: R$10 → **R$4,90**.
 Atualizado em todo texto do app e da landing (busquei e confirmei que
 não sobrou nenhum "R$20" no código).
 

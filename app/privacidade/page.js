@@ -5,7 +5,7 @@ export const metadata = { title: 'Política de privacidade — IdleHive', robots
 export default function Privacidade() {
   return (
     <LegalPage title="Política de privacidade">
-      <p>Esta política explica como {LEGAL.responsavel} ({LEGAL.documento}), controlador dos dados, trata informações de quem visita o site ou usa o IdleHive, conforme a Lei Geral de Proteção de Dados (Lei 13.709/2018).</p>
+      <p>Esta política explica como {LEGAL.responsavel}, controlador dos dados, trata informações de quem visita o site ou usa o IdleHive, conforme a Lei Geral de Proteção de Dados (Lei 13.709/2018).</p>
       <h2>1. Dados que coletamos</h2>
       <ul>
         <li><strong>Conta:</strong> e-mail e senha (guardada de forma criptografada pelo nosso provedor de autenticação).</li>
