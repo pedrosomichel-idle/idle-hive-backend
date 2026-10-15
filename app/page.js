@@ -417,9 +417,7 @@ export default function LandingPage() {
             <a href="#preco">Preço</a>
             <a href="#faq">Perguntas</a>
             <a href={DISCORD_URL} target="_blank" rel="noreferrer">Comunidade</a>
-            <a href="/termos">Termos</a>
-            <a href="/privacidade">Privacidade</a>
-            <a href="/reembolso">Reembolso</a>
+            {/* Termos / Privacidade / Reembolso: religar quando lib/legal.js tiver os dados do responsável */}
           </div>
           <div className="copy">© {new Date().getFullYear()} IdleHive — Todos os direitos reservados</div>
         </div>

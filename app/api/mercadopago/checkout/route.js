@@ -30,10 +30,13 @@ export async function POST(request) {
     return NextResponse.json({ error: 'deviceId é obrigatório pra comprar um slot extra.' }, { status: 400 });
   }
 
+  // Licença: preço fixo no código (R$ 19,90, out/2026) para não depender da
+  // variável da Vercel ficar em sincronia com o que a landing e o app mostram.
+  const LICENSE_PRICE_BRL = 19.9;
   const priceBRL =
     type === 'device_slot'
       ? Number(process.env.MERCADOPAGO_DEVICE_SLOT_PRICE_BRL || 10)
-      : Number(process.env.MERCADOPAGO_LICENSE_PRICE_BRL || 20);
+      : LICENSE_PRICE_BRL;
 
   const title = type === 'device_slot' ? 'IdleHive — Slot extra de dispositivo' : 'IdleHive — Licença padrão';
 
